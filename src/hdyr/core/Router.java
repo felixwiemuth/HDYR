@@ -101,12 +101,12 @@ public class Router extends SimObject implements RouterInterface {
 //    }
 
     @Override
-    public ArrayList<RouterInPort> getInPorts() {
+    public ArrayList<RouterInPort> inPorts() {
         return inPorts;
     }
     
     @Override
-    public ArrayList<Link> getOutPorts() {
+    public ArrayList<Link> outPorts() {
         return outPorts;
     }
     

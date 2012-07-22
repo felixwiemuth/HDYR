@@ -28,6 +28,10 @@ public interface RouterInPortInterface {
      */
     public Packet peek();
     
+    /**
+     * Get the size of the queue in DATAUNITS.
+     * @return 
+     */
     public int getQueueSize();
     
 //    /**

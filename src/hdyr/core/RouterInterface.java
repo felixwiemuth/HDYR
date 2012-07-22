@@ -25,8 +25,8 @@ import java.util.ArrayList;
  */
 public interface RouterInterface {
 
-    public ArrayList<? extends RouterInPortInterface> getInPorts();
-    public ArrayList<? extends Link> getOutPorts();
+    public ArrayList<? extends RouterInPortInterface> inPorts();
+    public ArrayList<? extends Link> outPorts();
 
     //TODO throws exception
     public void push(RouterInPortInterface srcPort, RouterOutPortInterface destPort);

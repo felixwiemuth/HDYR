@@ -23,10 +23,9 @@ package hdyr.core;
  */
 public interface RouterOutPortInterface {
     
+    /**
+     * Get the size of the queue in DATAUNITS.
+     * @return 
+     */
     public int getQueueSize();
-//    /**
-//     * Insert packet to be sent form this port.
-//     * @param p 
-//     */
-//    public void insert(Packet p);
 }

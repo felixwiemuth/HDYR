@@ -16,16 +16,12 @@
  */
 package hdyr.core;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Felix Wiemuth
  */
 public abstract class RoutingAlgorithm {
-    protected RouterInterface router;
-    protected ArrayList<? extends RouterInPortInterface> inPorts;
-    protected ArrayList<? extends RouterOutPortInterface> outPorts;
+    private RouterInterface router;
     
     
     public void setRouter(RouterInterface router) {
@@ -44,9 +40,16 @@ public abstract class RoutingAlgorithm {
      * but after parent field 'router' is initialized.
      */
     public void init() {
-        inPorts = router.getInPorts();
-        outPorts = router.getOutPorts();
+
     }
+
+    public RouterInterface router() {
+        return router;
+    }
+    
+    
+    
+    
     
     /**
      * This is called every simulation step.
