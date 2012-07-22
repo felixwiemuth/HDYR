@@ -23,6 +23,7 @@ package hdyr.core;
  * @author Felix Wiemuth
  */
 public class Packet {
+
     private int size; //size of packet in DATAUNITS
     private String src; //source address
     private String dest; //destination address
@@ -32,10 +33,7 @@ public class Packet {
         this.src = src;
         this.dest = dest;
     }
-    
 
-    
-    
     /**
      * Get packet size in DATAUNIT.
      * @return 
@@ -44,7 +42,6 @@ public class Packet {
         return size;
     }
 
-    
     /**
      * Get source address.
      * @return 
@@ -52,7 +49,7 @@ public class Packet {
     public String getSrc() {
         return src;
     }
-    
+
     /**
      * Get destination address.
      * @return 
@@ -60,8 +57,4 @@ public class Packet {
     public String getDest() {
         return dest;
     }
-
-    
-    
-    
 }

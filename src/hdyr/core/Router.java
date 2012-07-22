@@ -118,7 +118,7 @@ public class Router extends SimObject implements RouterInterface {
         RouterInPort src = (RouterInPort) srcPort;
         Link dest = (Link) destPort;
         log(this, "Packet inserted into outgoing queue to router " + dest.getDest().logname() + ": " + src.peekSimPacket().name());
-        dest.insert( src.poll() );
+        dest.insert(src.poll());
     }
     
     

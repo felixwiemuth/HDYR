@@ -21,19 +21,20 @@ package hdyr.core;
  * @author Felix Wiemuth
  */
 public abstract class SimObject {
+
     private String name;
     private final SimulationInfo info;
-    
+
     public SimObject(String name, SimulationInfo info) {
         this.name = name;
         this.info = info;
     }
-    
+
     //public String id();
     public String logname() {
         return name;
     }
-    
+
     public SimulationInfo info() {
         return info;
     }

@@ -22,21 +22,21 @@ import java.util.Random;
  * Manage time, IDs, Logging.
  * @author Felix Wiemuth
  */
-public class SimulationInfo { //TODO split into interface: SimInfo, class: SimHandler
+public class SimulationInfo { //TODO split into interface: SimInfo, class: SimHandlerF
+
     private int time = 0;
     private int nextPacketID = 0; //needed? -> task of transport layer?
     //protected Random rand = new Random();
-    
+
     public void step() {
         time++;
     }
-    
+
     public int getTime() {
         return time;
     }
-    
+
     public int getPacketID() {
         return nextPacketID++;
     }
-    
 }

@@ -21,30 +21,28 @@ package hdyr.core;
  * @author Felix Wiemuth
  */
 public class LinePacket {
+
     private SimPacket packet;
     private int timeToLeave;
-    
+
     public LinePacket(SimPacket packet, int timeToLeave) {
         this.packet = packet;
         this.timeToLeave = timeToLeave;
-        
+
     }
-    
+
     public int getTimeToLeave() {
         return timeToLeave;
     }
-    
+
 //    public boolean isToLeave() {
 //        return timeToLeave <= 0;
 //    }
-    
     public SimPacket getPacket() {
         return packet;
     }
-    
+
     public void decreaseTimeToLeave() {
         timeToLeave--;
     }
-    
-    
 }

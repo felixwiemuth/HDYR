@@ -58,7 +58,6 @@ public class Link extends SimObject implements RouterOutPortInterface {
 //    public int getInQueueSize() {
 //        return inQueue.size();
 //    }
-
     /**
      * Do simulation step. This must be called in the specified order with other
      * 'simulateStep()' methods.

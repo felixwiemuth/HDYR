@@ -21,36 +21,30 @@ package hdyr.core;
  * @author Felix Wiemuth
  */
 public abstract class RoutingAlgorithm {
+
     private RouterInterface router;
-    
-    
+
     public void setRouter(RouterInterface router) {
         this.router = router;
     }
-    
+
 //    /**
 //     * This is called when a packet arrives at the router.
 //     * Hence the routing algorithm can rely on the fact
 //     * that a packet is available for processing.
 //     */
 //    public abstract void onPacketArrive();
-    
     /**
      * This is called before the algorithm is used the first time,
      * but after parent field 'router' is initialized.
      */
     public void init() {
-
     }
 
     public RouterInterface router() {
         return router;
     }
-    
-    
-    
-    
-    
+
     /**
      * This is called every simulation step.
      * If a packet arrived in this step,
@@ -58,5 +52,4 @@ public abstract class RoutingAlgorithm {
      * and 'onSimulationStep()' is always the last method being called.
      */
     public abstract void onSimulationStep();
-    
 }

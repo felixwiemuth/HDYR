@@ -22,7 +22,7 @@ package hdyr.core;
  * @author Felix Wiemuth
  */
 public interface RouterOutPortInterface {
-    
+
     /**
      * Get the size of the queue in DATAUNITS.
      * @return 

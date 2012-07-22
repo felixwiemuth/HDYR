@@ -23,15 +23,16 @@ package hdyr.core;
  * @author Felix Wiemuth
  */
 public class SimPacket {
+
     private Packet packet; //the real packet to be transported
     private String id; //name
-    
+
     public SimPacket(Packet packet, String id) {
         //super("", info); //TODO name?
         this.id = id;
         this.packet = packet;
     }
-    
+
     public Packet packet() {
         return packet;
     }
@@ -39,6 +40,4 @@ public class SimPacket {
     public String name() {
         return id;
     }
-
-    
 }
