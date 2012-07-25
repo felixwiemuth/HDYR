@@ -31,7 +31,9 @@ public class Link extends SimObject implements RouterOutPortInterface {
 
     private LineType type;
     private LinkedBlockingQueue<SimPacket> inQueue; //routers output queue for this link
+    private int inQueueSize; //DATAUNITS in 'inQueue'
     private LinkedBlockingQueue<LinePacket> packets; //packets on the line
+    private int packetsSize; //DATAUNITS in 'packets' //TODO use for analysis
     private Router dest; //router where to insert packets
     private RouterInPort destInPort; //router input port of 'dest'
     private int bandwidthAvailable; //indicate DATAUNITS that can be inserted into the line in the current step
@@ -42,7 +44,9 @@ public class Link extends SimObject implements RouterOutPortInterface {
         this.dest = dest;
         this.destInPort = dest.newInPort();
         inQueue = new LinkedBlockingQueue<SimPacket>();
+        inQueueSize = 0;
         packets = new LinkedBlockingQueue<LinePacket>();
+        packetsSize = 0;
         bandwidthAvailable = type.getBandwidth();
     }
 
@@ -53,6 +57,7 @@ public class Link extends SimObject implements RouterOutPortInterface {
      */
     public void insert(SimPacket p) {
         inQueue.add(p);
+        inQueueSize += p.packet().getSize();
     }
 
 //    public int getInQueueSize() {
@@ -66,10 +71,12 @@ public class Link extends SimObject implements RouterOutPortInterface {
         //1. take new packets
         while (!inQueue.isEmpty() && bandwidthAvailable >= inQueue.peek().packet().getSize()) {
             SimPacket p = inQueue.poll();
+            inQueueSize -= p.packet().getSize();
             bandwidthAvailable -= p.packet().getSize();
             int timeToLeave = info().getTime() + type.getDelay() + Math.ceilDiv(p.packet().getSize(), type.getBandwidth());
             //add the packet
             packets.add(new LinePacket(p, timeToLeave));
+            packetsSize += p.packet().getSize();
             log(this, "Packet " + p.name() + " is now (completely) on the line!");
         }
 
@@ -85,8 +92,10 @@ public class Link extends SimObject implements RouterOutPortInterface {
 
         //2. let packets emerge
         while (!packets.isEmpty() && packets.peek().getTimeToLeave() == info().getTime()) {
-            log(this, "Packet " + packets.peek().getPacket().name() + " emerged at router " + dest.logname());
-            destInPort.insert(packets.poll().getPacket());
+            SimPacket p = packets.poll().getPacket();
+            log(this, "Packet " + p.name() + " emerged at router " + dest.logname());
+            packetsSize -= p.packet().getSize();
+            destInPort.insert(p);
         }
     }
 
@@ -116,6 +125,6 @@ public class Link extends SimObject implements RouterOutPortInterface {
 
     @Override
     public int getQueueSize() {
-        return inQueue.size();
+        return inQueueSize;
     }
 }
