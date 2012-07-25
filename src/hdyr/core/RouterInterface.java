@@ -29,6 +29,13 @@ public interface RouterInterface {
 
     public ArrayList<? extends Link> outPorts();
 
-    //TODO throws exception
-    public void push(RouterInPortInterface srcPort, RouterOutPortInterface destPort);
+    /**
+     * Move the first packet on the queue of 'srcPort' to the
+     * 'destPort' queue.
+     * @param srcPort
+     * @param destPort
+     * @return false - if the queue of 'srcPort' is empty
+     *         true - otherwise
+     */
+    public boolean push(RouterInPortInterface srcPort, RouterOutPortInterface destPort);
 }

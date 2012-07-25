@@ -16,8 +16,8 @@
  */
 package hdyr.core;
 
+import static hdyr.util.Log.log;
 import java.util.ArrayList;
-import static hdyr.util.Log.*;
 
 /**
  *
@@ -45,22 +45,20 @@ public class Router extends SimObject implements RouterInterface {
         inPorts = new ArrayList<RouterInPort>();
         alg.init();
     }
-    
+
     public RouterInPort newInPort() {
         inPorts.add(new RouterInPort(this));
-        return inPorts.get(inPorts.size()-1);
+        return inPorts.get(inPorts.size() - 1);
     }
 
     public void addLink(LineType type, Router dest) {
         outPorts.add(new Link(type, dest, logname() + "-" + dest.logname(), info()));
     }
-    
+
     //TODO make Host.connect(LineType type, Router router) -- NOTE: HOST ^= LAN
     public void addInPort() {
         inPorts.add(new RouterInPort(this));
     }
-
-    
 
     /**
      * Update 'buffer' to reflect the currently available buffer
@@ -75,51 +73,29 @@ public class Router extends SimObject implements RouterInterface {
         }
     }
 
-//    public Packet take(Link link) {
-//        
-//    }
     public void simulateStep() {
         alg.onSimulationStep();
     }
-
-//    @Override
-//    public int getHighestPort() {
-//        return outPorts.size() - 1;
-//    }
-//
-//    @Override
-//    public Packet peek() {
-//        return inQueue.peek();
-//    }
-//
-//    @Override
-//    public void push(int port) throws IndexOutOfBoundsException {
-//        if (port < 0 || port > getHighestPort())
-//            throw new IndexOutOfBoundsException("There is no port " + port + " at router " + logname() + "!");
-//        log(this, "Packet inserted into outgoing queue to router " + outPorts.get(port).getDest().logname() + ": " + inQueue.peek().logname());
-//        outPorts.get(port).insert(inQueue.poll());
-//    }
 
     @Override
     public ArrayList<RouterInPort> inPorts() {
         return inPorts;
     }
-    
+
     @Override
     public ArrayList<Link> outPorts() {
         return outPorts;
     }
-    
-    
-    
 
     @Override
-    public void push(RouterInPortInterface srcPort, RouterOutPortInterface destPort) {
+    public boolean push(RouterInPortInterface srcPort, RouterOutPortInterface destPort) {
         RouterInPort src = (RouterInPort) srcPort;
         Link dest = (Link) destPort;
+        if (src.isEmpty()) {
+            return false;
+        }
         log(this, "Packet inserted into outgoing queue to router " + dest.getDest().logname() + ": " + src.peekSimPacket().name());
         dest.insert(src.poll());
+        return true;
     }
-    
-    
 }

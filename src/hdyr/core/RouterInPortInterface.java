@@ -29,6 +29,12 @@ public interface RouterInPortInterface {
     public Packet peek();
     
     /**
+     * Test whether the in queue of this input port is empty.
+     * @return - 'true' if the queue is empty 
+     */
+    public boolean isEmpty();
+    
+    /**
      * Get the size of the queue in DATAUNITS.
      * @return 
      */

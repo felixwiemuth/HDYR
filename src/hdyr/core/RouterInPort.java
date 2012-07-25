@@ -32,6 +32,11 @@ public class RouterInPort implements RouterInPortInterface {
     }
 
     @Override
+    public boolean isEmpty() {
+        return inQueue.isEmpty();
+    }
+    
+    @Override
     public Packet peek() {
         if (inQueue.isEmpty()) {
             return null;
