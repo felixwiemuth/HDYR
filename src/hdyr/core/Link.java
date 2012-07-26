@@ -30,6 +30,7 @@ import hdyr.util.Math;
 public class Link extends SimObject implements RouterOutPortInterface {
 
     private LineType type;
+    private Router router; //the source router
     private LinkedBlockingQueue<SimPacket> inQueue; //routers output queue for this link
     private int inQueueSize; //DATAUNITS in 'inQueue'
     private LinkedBlockingQueue<LinePacket> packets; //packets on the line
@@ -38,9 +39,10 @@ public class Link extends SimObject implements RouterOutPortInterface {
     private RouterInPort destInPort; //router input port of 'dest'
     private int bandwidthAvailable; //indicate DATAUNITS that can be inserted into the line in the current step
 
-    public Link(LineType type, Router dest, String name, SimulationInfo info) {
+    public Link(LineType type, Router router, Router dest, String name, SimulationInfo info) {
         super(name, info);
         this.type = type;
+        this.router = router;
         this.dest = dest;
         this.destInPort = dest.newInPort();
         inQueue = new LinkedBlockingQueue<SimPacket>();
@@ -52,7 +54,7 @@ public class Link extends SimObject implements RouterOutPortInterface {
 
     /**
      * Insert packet p into the output queue of the router for this port.
-     *
+     * The packet stays inside the router.
      * @param p
      */
     public void insert(SimPacket p) {
@@ -72,6 +74,7 @@ public class Link extends SimObject implements RouterOutPortInterface {
         while (!inQueue.isEmpty() && bandwidthAvailable >= inQueue.peek().packet().getSize()) {
             SimPacket p = inQueue.poll();
             inQueueSize -= p.packet().getSize();
+            router.freeBuffer(p.packet().getSize());
             bandwidthAvailable -= p.packet().getSize();
             int timeToLeave = info().getTime() + type.getDelay() + Math.ceilDiv(p.packet().getSize(), type.getBandwidth());
             //add the packet

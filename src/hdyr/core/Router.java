@@ -29,10 +29,7 @@ public class Router extends SimObject implements RouterInterface {
     private int buffer; //available buffer
     private RoutingAlgorithm alg;
     //ports
-    //private ArrayList<Link> inPorts; //doesn´t have to know??
     private ArrayList<Link> outPorts;
-    //port queues
-    //private LinkedBlockingQueue<Packet> inQueue; //packets inserted by link object
     private ArrayList<RouterInPort> inPorts;
 
     public Router(int buffersize, String name, RoutingAlgorithm alg, SimulationInfo info) {
@@ -52,12 +49,36 @@ public class Router extends SimObject implements RouterInterface {
     }
 
     public void addLink(LineType type, Router dest) {
-        outPorts.add(new Link(type, dest, logname() + "-" + dest.logname(), info()));
+        outPorts.add(new Link(type, this, dest, logname() + "-" + dest.logname(), info()));
     }
 
     //TODO make Host.connect(LineType type, Router router) -- NOTE: HOST ^= LAN
     public void addInPort() {
         inPorts.add(new RouterInPort(this));
+    }
+
+    /**
+     * To be used by 'RouterInPort': Get permission to receive
+     * packet from link layer and indicate buffer used.
+     * @param n DATAUNITS of buffer needed
+     * @return true - enough buffer available
+     *         false - not enough buffer available: do not add packet!
+     */
+    public boolean useBuffer(int n) {
+        if (buffer >= n) {
+            buffer -= n;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * To be used by 'RouterOutPort': Indicate that packet was removed from
+     * buffer.
+     * @param n DATAUNTIS of buffer freed
+     */
+    public void freeBuffer(int n) {
+        buffer += n;
     }
 
     /**
@@ -97,5 +118,29 @@ public class Router extends SimObject implements RouterInterface {
         log(this, "Packet inserted into outgoing queue to router " + dest.getDest().logname() + ": " + src.peekSimPacket().name());
         dest.insert(src.poll());
         return true;
+    }
+
+    public void discard(SimPacket p) {
+        log(this, "Packet discarded because of no buffers available: " + p.name());
+    }
+    
+    @Override
+    public void discard(RouterInPortInterface inPort) {
+        if (inPort.isEmpty()) {
+            return;
+        }
+        SimPacket p = ((RouterInPort) inPort).poll();
+        freeBuffer(p.packet().getSize());
+        log(this, "Packet discarded by routing algorithm: " + p.name());
+    }
+
+    @Override
+    public int bufferAvailable() {
+        return buffer;
+    }
+
+    @Override
+    public int bufferSize() {
+        return buffersize;
     }
 }

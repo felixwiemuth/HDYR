@@ -28,6 +28,18 @@ public interface RouterInterface {
     public ArrayList<? extends RouterInPortInterface> inPorts();
 
     public ArrayList<? extends Link> outPorts();
+    
+    /**
+     * Get available buffer in DATAUNITS.
+     * @return 
+     */
+    public int bufferAvailable();
+    
+    /**
+     * Get size of buffer in DATAUNITS.
+     * @return 
+     */
+    public int bufferSize();
 
     /**
      * Move the first packet on the queue of 'srcPort' to the
@@ -38,4 +50,10 @@ public interface RouterInterface {
      *         true - otherwise
      */
     public boolean push(RouterInPortInterface srcPort, RouterOutPortInterface destPort);
+    
+    /**
+     * Discard the first packet of the queue of 'inPort'.
+     * @param inPort 
+     */
+    public void discard(RouterInPortInterface inPort);
 }

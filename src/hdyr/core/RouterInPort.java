@@ -35,7 +35,7 @@ public class RouterInPort implements RouterInPortInterface {
     public boolean isEmpty() {
         return inQueue.isEmpty();
     }
-    
+
     @Override
     public Packet peek() {
         if (inQueue.isEmpty()) {
@@ -49,12 +49,24 @@ public class RouterInPort implements RouterInPortInterface {
         return inQueue.size();
     }
 
+    /**
+     * To be used by 'Link': Insert packet 'p' into the router.
+     * If no buffer space is available, the packet is discarded.
+     * @param p 
+     */
     public void insert(SimPacket p) {
-        inQueue.add(p);
+        if (router.useBuffer(p.packet().getSize())) {
+            inQueue.add(p);
+        } else {
+            router.discard(p);
+        }
     }
 
-    //TODO more to do?
+    //TODO TEMP: remove
     public void insert(Packet p) {
+        if (!router.useBuffer(p.getSize())) {
+            return;
+        }
         inQueue.add(new SimPacket(p, "P" + router.info().getPacketID()));
     }
 
@@ -62,6 +74,10 @@ public class RouterInPort implements RouterInPortInterface {
         return inQueue.peek();
     }
 
+    /**
+     * Get the first packet of the input queue.
+     * @return null - if queue is empty
+     */
     public SimPacket poll() {
         return inQueue.poll();
     }
