@@ -66,6 +66,25 @@ public interface RouterInterface {
     public boolean push(RouterInPortInterface srcPort, RouterOutPortInterface destPort);
 
     /**
+     * Move the first packet on the queue of 'srcPort' to the
+     * LAN that is connected to the router (if one).
+     * @param srcPort
+     * @param lan
+     * @return false - if the queue of 'srcPort' is empty or no LAN connected
+     *         true - otherwise
+     */
+    public boolean pushToLAN(RouterInPortInterface srcPort);
+
+    /**
+     * Move the first packet on the queue that contains the packet from the
+     * connected LAN to the 'destPort' queue.
+     * @param destPort
+     * @return false - if the queue for the packets of the LAN is empty
+     *         true - otherwise
+     */
+    public boolean pushFromLAN(RouterOutPortInterface destPort);
+
+    /**
      * Discard the first packet of the queue of 'inPort'.
      * @param inPort 
      */

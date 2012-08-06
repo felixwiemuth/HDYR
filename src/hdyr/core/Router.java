@@ -18,6 +18,7 @@ package hdyr.core;
 
 import static hdyr.util.Log.log;
 import java.util.ArrayList;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  *
@@ -29,8 +30,10 @@ public class Router extends SimObject implements RouterInterface {
     private int buffer; //available buffer
     private RoutingAlgorithm alg;
     //ports
-    private ArrayList<Link> outPorts;
-    private ArrayList<RouterInPort> inPorts;
+    private ArrayList<Link> outPorts = new ArrayList<Link>();
+    private ArrayList<RouterInPort> inPorts = new ArrayList<RouterInPort>();
+    private LinkedBlockingQueue<SimPacket> fromLAN = new LinkedBlockingQueue<SimPacket>(); //packets received from LAN
+    private Host lan = null; //the LAN this router is connected to - 'null' if not
 
     public Router(int buffersize, String name, RoutingAlgorithm alg, SimulationInfo info) {
         super(name, info);
@@ -38,9 +41,13 @@ public class Router extends SimObject implements RouterInterface {
         this.alg = alg;
         alg.setRouter(this);
         buffer = buffersize;
-        outPorts = new ArrayList<Link>();
-        inPorts = new ArrayList<RouterInPort>();
         alg.init();
+    }
+
+    public Router(int buffersize, String name, RoutingAlgorithm alg, SimulationInfo info, Host lan) {
+        this(buffersize, name, alg, info);
+        this.lan = lan;
+        this.lan.setRouter(this);
     }
 
     public RouterInPort newInPort() {
@@ -72,6 +79,7 @@ public class Router extends SimObject implements RouterInterface {
     }
 
     /**
+     * TODO still needed?
      * Update 'buffer' to reflect the currently available buffer
      */
     public void updateBuffer() {
@@ -82,6 +90,14 @@ public class Router extends SimObject implements RouterInterface {
         for (Link link : outPorts) {
             buffer -= link.getQueueSize();
         }
+    }
+
+    public boolean insertFromLAN(SimPacket p) {
+        if (!useBuffer(p.packet().getSize())) {
+            return false;
+        }
+        fromLAN.add(p);
+        return true;
     }
 
     public void simulateStep() {
@@ -107,6 +123,28 @@ public class Router extends SimObject implements RouterInterface {
         }
         log(this, "Packet inserted into outgoing queue to router " + dest.getDest().logname() + ": " + src.peekSimPacket().name());
         dest.insert(src.poll());
+        return true;
+    }
+
+    @Override
+    public boolean pushToLAN(RouterInPortInterface srcPort) {
+        RouterInPort src = (RouterInPort) srcPort;
+        if (src.isEmpty() || lan == null) {
+            return false;
+        }
+        //TODO log
+        lan.insertFromRouter(src.poll());
+        return true;
+    }
+
+    @Override
+    public boolean pushFromLAN(RouterOutPortInterface destPort) {
+        if (fromLAN.isEmpty()) {
+            return false;
+        }
+        Link dest = (Link) destPort;
+        //TODO log
+        dest.insert(fromLAN.poll());
         return true;
     }
 
