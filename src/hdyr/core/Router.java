@@ -57,13 +57,7 @@ public class Router extends SimObject implements RouterInterface {
         inPorts.add(new RouterInPort(this));
     }
 
-    /**
-     * To be used by 'RouterInPort': Get permission to receive
-     * packet from link layer and indicate buffer used.
-     * @param n DATAUNITS of buffer needed
-     * @return true - enough buffer available
-     *         false - not enough buffer available: do not add packet!
-     */
+    @Override
     public boolean useBuffer(int n) {
         if (buffer >= n) {
             buffer -= n;
@@ -72,11 +66,7 @@ public class Router extends SimObject implements RouterInterface {
         return false;
     }
 
-    /**
-     * To be used by 'RouterOutPort': Indicate that packet was removed from
-     * buffer.
-     * @param n DATAUNTIS of buffer freed
-     */
+    @Override
     public void freeBuffer(int n) {
         buffer += n;
     }
@@ -123,7 +113,7 @@ public class Router extends SimObject implements RouterInterface {
     public void discard(SimPacket p) {
         log(this, "Packet discarded because of no buffers available: " + p.name());
     }
-    
+
     @Override
     public void discard(RouterInPortInterface inPort) {
         if (inPort.isEmpty()) {

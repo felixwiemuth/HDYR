@@ -28,18 +28,32 @@ public interface RouterInterface {
     public ArrayList<? extends RouterInPortInterface> inPorts();
 
     public ArrayList<? extends Link> outPorts();
-    
+
     /**
      * Get available buffer in DATAUNITS.
      * @return 
      */
     public int bufferAvailable();
-    
+
     /**
      * Get size of buffer in DATAUNITS.
      * @return 
      */
     public int bufferSize();
+
+    /**
+     * Ask for allocation of 'n' DATAUNITS bufferspace.
+     * @param n DATAUNITS of buffer needed
+     * @return true - enough buffer available, it is now allocated
+     *         false - not enough buffer available: memory must not be used!
+     */
+    public boolean useBuffer(int n);
+
+    /**
+     * Indicate that 'n' DATAUNITS of bufferspace are not used anymore.
+     * @param n DATAUNTIS of buffer to be freed
+     */
+    public void freeBuffer(int n);
 
     /**
      * Move the first packet on the queue of 'srcPort' to the
@@ -50,7 +64,7 @@ public interface RouterInterface {
      *         true - otherwise
      */
     public boolean push(RouterInPortInterface srcPort, RouterOutPortInterface destPort);
-    
+
     /**
      * Discard the first packet of the queue of 'inPort'.
      * @param inPort 
