@@ -25,14 +25,15 @@ import java.util.Queue;
  * The router is set when one is created using this host.
  * @author Felix Wiemuth
  */
-public class Host implements HostInterface {
+public class Host extends SimObject implements HostInterface {
 
     private TransportProtocol protocol;
     private Queue<SimPacket> fromApplication = new LinkedList<SimPacket>();
     private Queue<SimPacket> packetsReceived = new LinkedList<SimPacket>();
     private Router router; //the router this host is connected to
 
-    public Host(Router router, TransportProtocol protocol) throws Exception {
+    public Host(Router router, TransportProtocol protocol, String name, SimulationInfo info) throws Exception {
+        super(name, info);
         this.protocol = protocol;
         this.router = router;
         if (!router.setLAN(this)) {
@@ -40,10 +41,19 @@ public class Host implements HostInterface {
         }
         protocol.setHost(this);
     }
+    
+    public void insertFromApplication(Packet p) {
+        fromApplication.add(new SimPacket(p, Integer.toString(info().getPacketID())));
+        protocol.onPacketFromApplication(p);
+    }
 
     public void insertFromRouter(SimPacket p) {
         packetsReceived.add(p);
         protocol.onPacketReceived(p.packet());
+    }
+    
+    public void simulateStep() {
+        protocol.onSimulationStep();
     }
 
     @Override
