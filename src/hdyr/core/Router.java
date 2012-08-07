@@ -92,12 +92,12 @@ public class Router extends SimObject implements RouterInterface {
         }
     }
 
-    public boolean insertFromLAN(SimPacket p) {
-        if (!useBuffer(p.packet().getSize())) {
-            return false;
+    public void insertFromLAN(SimPacket p) {
+        if (useBuffer(p.packet().getSize())) {
+            fromLAN.add(p);
+        } else {
+            discard(p);
         }
-        fromLAN.add(p);
-        return true;
     }
 
     public void simulateStep() {

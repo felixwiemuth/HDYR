@@ -16,24 +16,47 @@
  */
 package hdyr.core;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * A 'Host' represents a transport layer or a collection
  * of those on a LAN, connected to one router.
  * The router is set when one is created using this host.
  * @author Felix Wiemuth
  */
-public class Host {
-
+public class Host implements HostInterface {
+    
+    private TransportProtocol protocol;
+    private Queue<SimPacket> fromApplication = new LinkedList<SimPacket>();
+    private Queue<SimPacket> packetsReceived = new LinkedList<SimPacket>();
     private Router router; //the router this host is connected to
 
-    public void insertFromRouter(SimPacket p) {
+    public Host(TransportProtocol protocol) {
+        this.protocol = protocol;
+        protocol.setHost(this);
     }
-
-    public boolean toRouter(SimPacket p) {
-        return router.insertFromLAN(p);
-    }
-
+    
     public void setRouter(Router router) {
         this.router = router;
+    }
+    
+    public void insertFromRouter(SimPacket p) {
+        packetsReceived.add(p);
+        protocol.onPacketReceived(p.packet());
+    }
+    
+    @Override
+    public Packet peek() {
+        return fromApplication.peek().packet();
+    }
+    
+    @Override
+    public boolean push() {
+        if (fromApplication.isEmpty()) {
+            return false;
+        }
+        router.insertFromLAN(fromApplication.poll());
+        return true;
     }
 }
