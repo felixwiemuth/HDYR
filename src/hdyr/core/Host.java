@@ -26,31 +26,31 @@ import java.util.Queue;
  * @author Felix Wiemuth
  */
 public class Host implements HostInterface {
-    
+
     private TransportProtocol protocol;
     private Queue<SimPacket> fromApplication = new LinkedList<SimPacket>();
     private Queue<SimPacket> packetsReceived = new LinkedList<SimPacket>();
     private Router router; //the router this host is connected to
 
-    public Host(TransportProtocol protocol) {
+    public Host(Router router, TransportProtocol protocol) throws Exception {
         this.protocol = protocol;
+        this.router = router;
+        if (!router.setLAN(this)) {
+            throw new Exception("Cannot attach host, router already has one!");
+        }
         protocol.setHost(this);
     }
-    
-    public void setRouter(Router router) {
-        this.router = router;
-    }
-    
+
     public void insertFromRouter(SimPacket p) {
         packetsReceived.add(p);
         protocol.onPacketReceived(p.packet());
     }
-    
+
     @Override
     public Packet peek() {
         return fromApplication.peek().packet();
     }
-    
+
     @Override
     public boolean push() {
         if (fromApplication.isEmpty()) {

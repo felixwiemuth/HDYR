@@ -44,12 +44,11 @@ public class Router extends SimObject implements RouterInterface {
         alg.init();
     }
 
-    public Router(int buffersize, String name, RoutingAlgorithm alg, SimulationInfo info, Host lan) {
-        this(buffersize, name, alg, info);
-        this.lan = lan;
-        this.lan.setRouter(this);
-    }
-
+    /**
+     * To be used when creating a new link.
+     * Creates a new router input port for the new link.
+     * @return the new input port
+     */
     public RouterInPort newInPort() {
         inPorts.add(new RouterInPort(this));
         return inPorts.get(inPorts.size() - 1);
@@ -59,9 +58,24 @@ public class Router extends SimObject implements RouterInterface {
         outPorts.add(new Link(type, this, dest, logname() + "-" + dest.logname(), info()));
     }
 
+    //TODO remove
     //TODO make Host.connect(LineType type, Router router) -- NOTE: HOST ^= LAN
     public void addInPort() {
         inPorts.add(new RouterInPort(this));
+    }
+
+    /**
+     * Attach a host (LAN) to the router.
+     * @param lan
+     * @return false - another LAN is already attached
+     *         true - success
+     */
+    public boolean setLAN(Host lan) {
+        if (lan != null) {
+            return false;
+        }
+        this.lan = lan;
+        return true;
     }
 
     @Override
