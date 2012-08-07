@@ -16,14 +16,14 @@
  */
 package hdyr.core;
 
-import java.util.ArrayList;
-import org.jdom2.Element;
 import static hdyr.util.Log.err;
 import hdyr.util.XML;
 import hdyr.util.XML.IncorrectValueException;
 import hdyr.util.XML.LoadXMLException;
 import hdyr.util.XML.MissingValueException;
 import hdyr.util.XML.WrongElementException;
+import java.util.ArrayList;
+import org.jdom2.Element;
 
 /**
  *

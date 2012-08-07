@@ -16,11 +16,11 @@
  */
 package hdyr.core;
 
-import org.jdom2.Element;
 import hdyr.util.XML;
 import hdyr.util.XML.IncorrectValueException;
 import hdyr.util.XML.MissingValueException;
 import hdyr.util.XML.WrongElementException;
+import org.jdom2.Element;
 
 /**
  *

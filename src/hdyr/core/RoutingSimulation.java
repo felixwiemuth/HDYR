@@ -16,13 +16,13 @@
  */
 package hdyr.core;
 
+import hdyr.util.XML.LoadXMLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import hdyr.util.XML.LoadXMLException;
 
 /**
  *
- * @author felix
+ * @author Felix Wiemuth
  */
 public class RoutingSimulation {
 

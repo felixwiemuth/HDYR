@@ -35,9 +35,6 @@ public class LinePacket {
         return timeToLeave;
     }
 
-//    public boolean isToLeave() {
-//        return timeToLeave <= 0;
-//    }
     public SimPacket getPacket() {
         return packet;
     }

@@ -17,8 +17,8 @@
 package hdyr.core;
 
 import static hdyr.util.Log.*;
-import java.util.concurrent.LinkedBlockingQueue;
 import hdyr.util.Math;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * A Link is a unidirectional connection from one router to another. It is
@@ -62,9 +62,6 @@ public class Link extends SimObject implements RouterOutPortInterface {
         inQueueSize += p.packet().getSize();
     }
 
-//    public int getInQueueSize() {
-//        return inQueue.size();
-//    }
     /**
      * Do simulation step. This must be called in the specified order with other
      * 'simulateStep()' methods.
@@ -106,6 +103,7 @@ public class Link extends SimObject implements RouterOutPortInterface {
         return dest;
     }
 
+    //DEBUG
     public void printQueue() {
         StringBuilder sb = new StringBuilder("Line: ");
 //        int last = 0;

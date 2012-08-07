@@ -21,7 +21,7 @@ package hdyr.util;
  * @author Felix Wiemuth
  */
 public class Math {
-    
+
     /**
      * For x >= 0 devide x by y, rounding up
      * @param x
@@ -29,7 +29,6 @@ public class Math {
      * @return 
      */
     public static int ceilDiv(int x, int y) {
-        return (x+y-1)/y;
+        return (x + y - 1) / y;
     }
-    
 }

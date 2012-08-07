@@ -16,8 +16,6 @@
  */
 package hdyr.core;
 
-import java.util.Random;
-
 /**
  * Manage time, IDs, Logging.
  * @author Felix Wiemuth

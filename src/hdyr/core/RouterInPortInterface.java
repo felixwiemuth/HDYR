@@ -21,30 +21,22 @@ package hdyr.core;
  * @author Felix Wiemuth
  */
 public interface RouterInPortInterface {
-    
+
     /**
      * Look at the first packet of the input queue of this port.
      * @return null - if no packets available
      */
     public Packet peek();
-    
+
     /**
      * Test whether the in queue of this input port is empty.
      * @return - 'true' if the queue is empty 
      */
     public boolean isEmpty();
-    
+
     /**
      * Get the size of the queue in DATAUNITS.
      * @return 
      */
     public int getQueueSize();
-    
-//    /**
-//     * Push the first packet on the queue to an output port.
-//     * @param port
-//     * @return 
-//     */
-//    public Packet push(RouterOutPort port);
-    
 }

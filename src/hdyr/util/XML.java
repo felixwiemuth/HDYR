@@ -16,22 +16,20 @@
  */
 package hdyr.util;
 
+import static hdyr.util.Log.log;
 import java.io.File;
 import java.io.IOException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-import static hdyr.util.Log.log;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Felix Wiemuth
  */
 public class XML {
-    
+
     public static class IncorrectValueException extends Exception {
 
         public IncorrectValueException() {
@@ -72,11 +70,12 @@ public class XML {
             throw new LoadXMLException();
         }
     }
-    
-    public static int getIntVal(Element e, String attname) throws MissingValueException, IncorrectValueException{
+
+    public static int getIntVal(Element e, String attname) throws MissingValueException, IncorrectValueException {
         String val = e.getAttributeValue(attname);
-        if (val == null)
+        if (val == null) {
             throw new MissingValueException(attname);
+        }
         try {
             return Integer.parseInt(val);
         } catch (NumberFormatException ex) {

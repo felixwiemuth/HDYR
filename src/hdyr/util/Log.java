@@ -17,34 +17,31 @@
 package hdyr.util;
 
 import hdyr.core.SimObject;
-import hdyr.core.SimulationInfo;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Felix Wiemuth
  */
 public class Log {
-    
+
     public static void log(SimObject s, String msg) {
         //Logger.getLogger(s.getClass().getName()).log(Level.INFO, msg);
         System.out.println("[" + s.info().getTime() + "] " + s.logname() + ": " + msg);
     }
-    
+
     public static void log(Object o) {
         System.out.println(o);
     }
-    
+
     public static void err(Object o) {
         log("[ERROR] " + o);
     }
+
     public static void warn(Object o) {
         log("[WARNING] " + o);
     }
-    
+
     public static void info(Object o) {
         log("[INFO] " + o);
     }
-    
 }
