@@ -71,7 +71,7 @@ public class Router extends SimObject implements RouterInterface {
      *         true - success
      */
     public boolean setLAN(Host lan) {
-        if (lan != null) {
+        if (this.lan != null) {
             return false;
         }
         this.lan = lan;
@@ -149,6 +149,14 @@ public class Router extends SimObject implements RouterInterface {
         //TODO log
         lan.insertFromRouter(src.poll());
         return true;
+    }
+
+    @Override
+    public Packet peekLAN() {
+        if (fromLAN.isEmpty()) {
+            return null;
+        }
+        return fromLAN.peek().packet();
     }
 
     @Override
