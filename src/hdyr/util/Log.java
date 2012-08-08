@@ -19,15 +19,15 @@ package hdyr.util;
 import hdyr.core.SimObject;
 
 /**
- *
+ * Functions to pass debug information to standard output.
  * @author Felix Wiemuth
  */
 public class Log {
 
-    public static void log(SimObject s, String msg) {
-        //Logger.getLogger(s.getClass().getName()).log(Level.INFO, msg);
-        System.out.println("[" + s.info().getTime() + "] " + s.logname() + ": " + msg);
-    }
+//    public static void log(SimObject s, String msg) {
+//        //Logger.getLogger(s.getClass().getName()).log(Level.INFO, msg);
+//        System.out.println("[" + s.info().getTime() + "] " + s.logname() + ": " + msg);
+//    }
 
     public static void log(Object o) {
         System.out.println(o);

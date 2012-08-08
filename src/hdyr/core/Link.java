@@ -16,7 +16,6 @@
  */
 package hdyr.core;
 
-import static hdyr.util.Log.*;
 import hdyr.util.Math;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -77,7 +76,7 @@ public class Link extends SimObject implements RouterOutPortInterface {
             //add the packet
             packets.add(new LinePacket(p, timeToLeave));
             packetsSize += p.packet().getSize();
-            log(this, "Packet " + p.name() + " is now (completely) on the line!");
+            logger().log("Packet " + p.name() + " is now (completely) on the line!");
         }
 
         //2. update 'bandwidthAvailable' for next step
@@ -93,7 +92,7 @@ public class Link extends SimObject implements RouterOutPortInterface {
         //2. let packets emerge
         while (!packets.isEmpty() && packets.peek().getTimeToLeave() == info().getTime()) {
             SimPacket p = packets.poll().getPacket();
-            log(this, "Packet " + p.name() + " emerged at router " + dest.logname());
+            logger().log("Packet " + p.name() + " emerged at router " + dest.logname());
             packetsSize -= p.packet().getSize();
             destInPort.insert(p);
         }
@@ -104,7 +103,7 @@ public class Link extends SimObject implements RouterOutPortInterface {
     }
 
     //DEBUG
-    public void printQueue() {
+    public void logQueue() {
         StringBuilder sb = new StringBuilder("Line: ");
 //        int last = 0;
 //        int ttl = 0;
@@ -121,7 +120,7 @@ public class Link extends SimObject implements RouterOutPortInterface {
             sb.append(p.getTimeToLeave());
             sb.append(" ");
         }
-        log(sb.toString());
+        logger().log(sb.toString());
     }
 
     @Override

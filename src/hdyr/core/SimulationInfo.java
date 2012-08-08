@@ -37,4 +37,8 @@ public class SimulationInfo { //TODO split into interface: SimInfo, class: SimHa
     public int getPacketID() {
         return nextPacketID++;
     }
+    
+    public void log(String s) {
+        //TODO implement
+    }
 }

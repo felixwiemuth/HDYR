@@ -26,11 +26,15 @@ public abstract class SimObject {
 
     private String name;
     private final SimulationInfo info;
-    private Logger logger = new Logger(); //logs the activity of the respective simulation object
+    private Logger logger = new Logger(this); //logs the activity of the respective simulation object
 
     public SimObject(String name, SimulationInfo info) {
         this.name = name;
         this.info = info;
+    }
+    
+    public Logger logger() {
+        return logger;
     }
 
     //public String id();

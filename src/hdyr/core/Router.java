@@ -16,7 +16,6 @@
  */
 package hdyr.core;
 
-import static hdyr.util.Log.log;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -108,6 +107,7 @@ public class Router extends SimObject implements RouterInterface {
 
     public void insertFromLAN(SimPacket p) {
         if (useBuffer(p.packet().getSize())) {
+            logger().log("Packet received from connected LAN: " + p.name());
             fromLAN.add(p);
         } else {
             discard(p);
@@ -135,7 +135,7 @@ public class Router extends SimObject implements RouterInterface {
         if (src.isEmpty()) {
             return false;
         }
-        log(this, "Packet inserted into outgoing queue to router " + dest.getDest().logname() + ": " + src.peekSimPacket().name());
+        logger().log("Packet inserted into outgoing queue to router " + dest.getDest().logname() + ": " + src.peekSimPacket().name());
         dest.insert(src.poll());
         return true;
     }
@@ -146,7 +146,7 @@ public class Router extends SimObject implements RouterInterface {
         if (src.isEmpty() || lan == null) {
             return false;
         }
-        //TODO log
+        logger().log("Packet inserted into connected LAN: " + src.peekSimPacket().name());
         lan.insertFromRouter(src.poll());
         return true;
     }
@@ -165,13 +165,13 @@ public class Router extends SimObject implements RouterInterface {
             return false;
         }
         Link dest = (Link) destPort;
-        //TODO log
+        logger().log("Packet inserted into outgoing queue to router " + dest.getDest().logname() + ": " + fromLAN.peek().name());
         dest.insert(fromLAN.poll());
         return true;
     }
 
     public void discard(SimPacket p) {
-        log(this, "Packet discarded because of no buffers available: " + p.name());
+        logger().log("Packet discarded because of no buffers available: " + p.name());
     }
 
     @Override
@@ -181,7 +181,7 @@ public class Router extends SimObject implements RouterInterface {
         }
         SimPacket p = ((RouterInPort) inPort).poll();
         freeBuffer(p.packet().getSize());
-        log(this, "Packet discarded by routing algorithm: " + p.name());
+        logger().log("Packet discarded by routing algorithm: " + p.name());
     }
 
     @Override
