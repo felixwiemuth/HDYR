@@ -17,28 +17,26 @@
 package hdyr.core;
 
 /**
- * Manage time, IDs, Logging.
+ *
  * @author Felix Wiemuth
  */
-public class SimulationInfo { //TODO split into interface: SimInfo, class: SimHandlerF / Director
+public interface Director {
 
-    private int time = 0;
-    private int nextPacketID = 0; //needed? -> task of transport layer?
-    //protected Random rand = new Random();
+    /**
+     * Get the current simulation time.
+     * @return TIMEUNITS passed from the beginning of the simulation
+     */
+    public int getTime();
 
-    public void step() {
-        time++;
-    }
+    /**
+     * Obtain a new packet ID.
+     * @return 
+     */
+    public String getNewPacketID();
 
-    public int getTime() {
-        return time;
-    }
-
-    public int getPacketID() {
-        return nextPacketID++;
-    }
-    
-    public void log(String s) {
-        //TODO implement
-    }
+    /**
+     * Add entry to main log.
+     * @param s 
+     */
+    public void log(String s);
 }

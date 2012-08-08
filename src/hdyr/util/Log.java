@@ -28,7 +28,6 @@ public class Log {
 //        //Logger.getLogger(s.getClass().getName()).log(Level.INFO, msg);
 //        System.out.println("[" + s.info().getTime() + "] " + s.logname() + ": " + msg);
 //    }
-
     public static void log(Object o) {
         System.out.println(o);
     }

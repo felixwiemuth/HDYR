@@ -29,7 +29,7 @@ public class Logger {
     private boolean toConsole = false; //also log to console
     private boolean toMain = false; //also pass to main logger
     private LinkedList<String> log = new LinkedList<String>();
-    
+
     public Logger(SimObject source) {
         this.source = source;
     }
@@ -41,7 +41,7 @@ public class Logger {
             System.out.println(source.logname() + ": " + entry);
         }
         if (toMain) {
-            source.info().log(entry);
+            source.director().log(entry);
         }
     }
 

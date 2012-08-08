@@ -38,8 +38,8 @@ public class Link extends SimObject implements RouterOutPortInterface {
     private RouterInPort destInPort; //router input port of 'dest'
     private int bandwidthAvailable; //indicate DATAUNITS that can be inserted into the line in the current step
 
-    public Link(LineType type, Router router, Router dest, String name, SimulationInfo info) {
-        super(name, info);
+    public Link(LineType type, Router router, Router dest, String name, Director director) {
+        super(name, director);
         this.type = type;
         this.router = router;
         this.dest = dest;
@@ -72,7 +72,7 @@ public class Link extends SimObject implements RouterOutPortInterface {
             inQueueSize -= p.packet().getSize();
             router.freeBuffer(p.packet().getSize());
             bandwidthAvailable -= p.packet().getSize();
-            int timeToLeave = info().getTime() + type.getDelay() + Math.ceilDiv(p.packet().getSize(), type.getBandwidth());
+            int timeToLeave = director().getTime() + type.getDelay() + Math.ceilDiv(p.packet().getSize(), type.getBandwidth());
             //add the packet
             packets.add(new LinePacket(p, timeToLeave));
             packetsSize += p.packet().getSize();
@@ -90,7 +90,7 @@ public class Link extends SimObject implements RouterOutPortInterface {
         }
 
         //2. let packets emerge
-        while (!packets.isEmpty() && packets.peek().getTimeToLeave() == info().getTime()) {
+        while (!packets.isEmpty() && packets.peek().getTimeToLeave() == director().getTime()) {
             SimPacket p = packets.poll().getPacket();
             logger().log("Packet " + p.name() + " emerged at router " + dest.logname());
             packetsSize -= p.packet().getSize();

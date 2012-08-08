@@ -16,33 +16,32 @@
  */
 package hdyr.core;
 
-import hdyr.util.Logger;
-
 /**
- *
+ * Manage simulation: time, IDs, Logging, ...
  * @author Felix Wiemuth
  */
-public abstract class SimObject {
+public class SimulationDirector implements Director { //TODO split into interface: SimInfo, class: SimHandlerF / Director
 
-    private String name;
-    private final Director director;
-    private Logger logger = new Logger(this); //logs the activity of the respective simulation object
+    private int time = 0;
+    private int nextPacketID = 0; //needed? -> task of transport layer?
+    //protected Random rand = new Random();
 
-    public SimObject(String name, Director director) {
-        this.name = name;
-        this.director = director;
+    public void step() {
+        time++;
     }
 
-    public Logger logger() {
-        return logger;
+    @Override
+    public int getTime() {
+        return time;
     }
 
-    //public String id();
-    public String logname() {
-        return name;
+    @Override
+    public String getNewPacketID() {
+        return "P" + nextPacketID++;
     }
 
-    public Director director() {
-        return director;
+    @Override
+    public void log(String s) {
+        //TODO implement
     }
 }

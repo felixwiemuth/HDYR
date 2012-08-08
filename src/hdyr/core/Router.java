@@ -34,8 +34,8 @@ public class Router extends SimObject implements RouterInterface {
     private LinkedBlockingQueue<SimPacket> fromLAN = new LinkedBlockingQueue<SimPacket>(); //packets received from LAN
     private Host lan = null; //the LAN this router is connected to - 'null' if not
 
-    public Router(int buffersize, String name, RoutingAlgorithm alg, SimulationInfo info) {
-        super(name, info);
+    public Router(int buffersize, String name, RoutingAlgorithm alg, Director director) {
+        super(name, director);
         this.buffersize = buffersize;
         this.alg = alg;
         alg.setRouter(this);
@@ -54,7 +54,7 @@ public class Router extends SimObject implements RouterInterface {
     }
 
     public void addLink(LineType type, Router dest) {
-        outPorts.add(new Link(type, this, dest, logname() + "-" + dest.logname(), info()));
+        outPorts.add(new Link(type, this, dest, logname() + "-" + dest.logname(), director()));
     }
 
     /**

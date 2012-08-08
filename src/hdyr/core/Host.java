@@ -32,8 +32,8 @@ public class Host extends SimObject implements HostInterface {
     private Queue<SimPacket> packetsReceived = new LinkedList<SimPacket>();
     private Router router; //the router this host is connected to
 
-    public Host(Router router, TransportProtocol protocol, String name, SimulationInfo info) throws Exception {
-        super(name, info);
+    public Host(Router router, TransportProtocol protocol, String name, Director director) throws Exception {
+        super(name, director);
         this.protocol = protocol;
         this.router = router;
         if (!router.setLAN(this)) {
@@ -43,7 +43,7 @@ public class Host extends SimObject implements HostInterface {
     }
 
     public void insertFromApplication(Packet p) {
-        fromApplication.add(new SimPacket(p, Integer.toString(info().getPacketID())));
+        fromApplication.add(new SimPacket(p, director().getNewPacketID()));
         protocol.onPacketFromApplication(p);
     }
 
