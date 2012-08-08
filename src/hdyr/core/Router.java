@@ -57,12 +57,6 @@ public class Router extends SimObject implements RouterInterface {
         outPorts.add(new Link(type, this, dest, logname() + "-" + dest.logname(), info()));
     }
 
-    //TODO remove
-    //TODO make Host.connect(LineType type, Router router) -- NOTE: HOST ^= LAN
-    public void addInPort() {
-        inPorts.add(new RouterInPort(this));
-    }
-
     /**
      * Attach a host (LAN) to the router.
      * @param lan
@@ -89,20 +83,6 @@ public class Router extends SimObject implements RouterInterface {
     @Override
     public void freeBuffer(int n) {
         buffer += n;
-    }
-
-    /**
-     * TODO still needed?
-     * Update 'buffer' to reflect the currently available buffer
-     */
-    public void updateBuffer() {
-        buffer = buffersize;
-        for (RouterInPort in : inPorts) {
-            buffer -= in.getQueueSize();
-        }
-        for (Link link : outPorts) {
-            buffer -= link.getQueueSize();
-        }
     }
 
     public void insertFromLAN(SimPacket p) {

@@ -20,7 +20,7 @@ package hdyr.core;
  * Manage time, IDs, Logging.
  * @author Felix Wiemuth
  */
-public class SimulationInfo { //TODO split into interface: SimInfo, class: SimHandlerF
+public class SimulationInfo { //TODO split into interface: SimInfo, class: SimHandlerF / Director
 
     private int time = 0;
     private int nextPacketID = 0; //needed? -> task of transport layer?

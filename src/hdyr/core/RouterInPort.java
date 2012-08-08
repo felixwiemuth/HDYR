@@ -62,14 +62,6 @@ public class RouterInPort implements RouterInPortInterface {
         }
     }
 
-    //TODO TEMP: remove
-    public void insert(Packet p) {
-        if (!router.useBuffer(p.getSize())) {
-            return;
-        }
-        inQueue.add(new SimPacket(p, "P" + router.info().getPacketID()));
-    }
-
     public SimPacket peekSimPacket() {
         return inQueue.peek();
     }
