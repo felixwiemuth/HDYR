@@ -76,6 +76,12 @@ public interface RouterInterface {
     public boolean pushToLAN(RouterInPortInterface srcPort);
 
     /**
+     * Look at the first packet of the queue of packets from the LAN.
+     * @return 
+     */
+    public Packet peekLAN();
+
+    /**
      * Move the first packet on the queue that contains the packet from the
      * connected LAN to the 'destPort' queue.
      * @param destPort

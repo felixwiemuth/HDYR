@@ -41,7 +41,7 @@ public class Host extends SimObject implements HostInterface {
         }
         protocol.setHost(this);
     }
-    
+
     public void insertFromApplication(Packet p) {
         fromApplication.add(new SimPacket(p, Integer.toString(info().getPacketID())));
         protocol.onPacketFromApplication(p);
@@ -51,7 +51,7 @@ public class Host extends SimObject implements HostInterface {
         packetsReceived.add(p);
         protocol.onPacketReceived(p.packet());
     }
-    
+
     public void simulateStep() {
         protocol.onSimulationStep();
     }

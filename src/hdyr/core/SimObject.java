@@ -16,6 +16,8 @@
  */
 package hdyr.core;
 
+import hdyr.util.Logger;
+
 /**
  *
  * @author Felix Wiemuth
@@ -24,6 +26,7 @@ public abstract class SimObject {
 
     private String name;
     private final SimulationInfo info;
+    private Logger logger = new Logger(); //logs the activity of the respective simulation object
 
     public SimObject(String name, SimulationInfo info) {
         this.name = name;
