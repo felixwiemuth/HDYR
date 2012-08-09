@@ -54,7 +54,9 @@ public class Router extends SimObject implements RouterInterface {
     }
 
     public void addLink(LineType type, Router dest) {
-        outPorts.add(new Link(type, this, dest, logname() + "-" + dest.logname(), director()));
+        Link link = new Link(type, this, dest, logname() + "-" + dest.logname(), director());
+        outPorts.add(link);
+        ((SimulationDirector) director()).addLink(link);
     }
 
     /**

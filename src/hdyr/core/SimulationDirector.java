@@ -16,6 +16,9 @@
  */
 package hdyr.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Manage simulation: time, IDs, Logging, ...
  * @author Felix Wiemuth
@@ -23,11 +26,43 @@ package hdyr.core;
 public class SimulationDirector implements Director { //TODO split into interface: SimInfo, class: SimHandlerF / Director
 
     private int time = 0;
-    private int nextPacketID = 0; //needed? -> task of transport layer?
-    //protected Random rand = new Random();
+    private int nextPacketID = 0;
+    //All simulation objects
+    private List<Host> hosts = new ArrayList<Host>();
+    private ArrayList<Router> routers = new ArrayList<Router>();
+    private List<Link> links = new ArrayList<Link>();
 
+    public void simulate(int time) {
+        for (int i = 0; i < time; i++) {
+            step();
+        }
+    }
+    
     public void step() {
+        System.out.println("TIME: " + time); //DEBUG
+        for (Host h : hosts) {
+            h.simulateStep();
+        }
+        for (Router r : routers) {
+            r.simulateStep();
+        }
+        for (Link l : links) {
+            l.simulateStep();
+        }
         time++;
+    }
+    
+    public void addHost(Host host) {
+        hosts.add(host);
+    }
+    
+    public void addRouter(Router router) {
+        routers.add(router);
+    }
+    
+    //used by 'Router'
+    public void addLink(Link link) {
+        links.add(link);
     }
 
     @Override
