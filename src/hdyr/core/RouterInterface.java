@@ -51,6 +51,7 @@ public interface RouterInterface {
 
     /**
      * Indicate that 'n' DATAUNITS of bufferspace are not used anymore.
+     * Note that they will only be available from the next simulation step on.
      * @param n DATAUNTIS of buffer to be freed
      */
     public void freeBuffer(int n);

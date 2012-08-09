@@ -33,6 +33,9 @@ public class Router extends SimObject implements RouterInterface {
     private ArrayList<RouterInPort> inPorts = new ArrayList<RouterInPort>();
     private LinkedBlockingQueue<SimPacket> fromLAN = new LinkedBlockingQueue<SimPacket>(); //packets received from LAN
     private Host lan = null; //the LAN this router is connected to - 'null' if not
+    
+    //state variables
+    private int freeBufferPending = 0; //buffer freed this step - available next step
 
     public Router(int buffersize, String name, RoutingAlgorithm alg, Director director) {
         super(name, director);
@@ -84,9 +87,9 @@ public class Router extends SimObject implements RouterInterface {
 
     @Override
     public void freeBuffer(int n) {
-        buffer += n;
+        freeBufferPending += n;
     }
-
+    
     public void insertFromLAN(SimPacket p) {
         if (useBuffer(p.packet().getSize())) {
             logger().log("Packet received from connected LAN: " + p.name());
@@ -97,6 +100,7 @@ public class Router extends SimObject implements RouterInterface {
     }
 
     public void simulateStep() {
+        buffer += freeBufferPending;
         alg.onSimulationStep();
     }
 
