@@ -26,8 +26,8 @@ import java.util.LinkedList;
 public class Logger {
 
     private SimObject source; //simulation object that loggs with this instance
-    private boolean toConsole = false; //also log to console
-    private boolean toMain = false; //also pass to main logger
+    private boolean toConsole; //also log to console
+    private boolean toMain; //also pass to main logger
     private LinkedList<LogEntry> log = new LinkedList<LogEntry>();
 
     public Logger(SimObject source) {

@@ -27,6 +27,8 @@ public class SimulationDirector implements Director { //TODO split into interfac
 
     private int time = 0;
     private int nextPacketID = 0;
+    private boolean loggingDefault_toConsole = true;
+    private boolean loggingDefault_toMain = true;
     //All simulation objects
     private List<Host> hosts = new ArrayList<Host>();
     private ArrayList<Router> routers = new ArrayList<Router>();
@@ -54,15 +56,21 @@ public class SimulationDirector implements Director { //TODO split into interfac
 
     public void addHost(Host host) {
         hosts.add(host);
+        host.logger().setConsoleLogging(loggingDefault_toConsole);
+        host.logger().setMainLogging(loggingDefault_toMain);
     }
 
     public void addRouter(Router router) {
         routers.add(router);
+        router.logger().setConsoleLogging(loggingDefault_toConsole);
+        router.logger().setMainLogging(loggingDefault_toMain);
     }
 
     //used by 'Router'
     public void addLink(Link link) {
         links.add(link);
+        link.logger().setConsoleLogging(loggingDefault_toConsole);
+        link.logger().setMainLogging(loggingDefault_toMain);
     }
 
     @Override
