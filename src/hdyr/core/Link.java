@@ -28,6 +28,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class Link extends SimObject implements RouterOutPortInterface {
 
+    private final static String SIMOBJECTTYPE = "Link";
     private LineType type;
     private Router router; //the source router
     private LinkedBlockingQueue<SimPacket> inQueue; //routers output queue for this link
@@ -126,5 +127,10 @@ public class Link extends SimObject implements RouterOutPortInterface {
     @Override
     public int getQueueSize() {
         return inQueueSize;
+    }
+
+    @Override
+    public String type() {
+        return SIMOBJECTTYPE;
     }
 }

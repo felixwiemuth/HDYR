@@ -28,20 +28,20 @@ public class Logger {
     private SimObject source; //simulation object that loggs with this instance
     private boolean toConsole = false; //also log to console
     private boolean toMain = false; //also pass to main logger
-    private LinkedList<String> log = new LinkedList<String>();
+    private LinkedList<LogEntry> log = new LinkedList<LogEntry>();
 
     public Logger(SimObject source) {
         this.source = source;
     }
 
     public void log(Object o) {
-        String entry = String.valueOf(o);
+        LogEntry entry = new LogEntry(source, source.director().getTime(), String.valueOf(o));
         log.add(entry);
         if (toConsole) {
-            System.out.println(source.logname() + ": " + entry);
+            System.out.println(entry.format());
         }
         if (toMain) {
-            source.director().log(entry);
+            //TODO implement
         }
     }
 
@@ -53,7 +53,7 @@ public class Logger {
         this.toMain = toMain;
     }
 
-    public LinkedList<String> getLog() {
+    public LinkedList<LogEntry> getLog() {
         return log;
     }
 }

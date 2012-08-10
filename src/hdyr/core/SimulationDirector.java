@@ -37,7 +37,7 @@ public class SimulationDirector implements Director { //TODO split into interfac
             step();
         }
     }
-    
+
     public void step() {
         System.out.println("TIME: " + time); //DEBUG
         for (Host h : hosts) {
@@ -51,15 +51,15 @@ public class SimulationDirector implements Director { //TODO split into interfac
         }
         time++;
     }
-    
+
     public void addHost(Host host) {
         hosts.add(host);
     }
-    
+
     public void addRouter(Router router) {
         routers.add(router);
     }
-    
+
     //used by 'Router'
     public void addLink(Link link) {
         links.add(link);

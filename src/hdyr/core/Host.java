@@ -27,6 +27,7 @@ import java.util.Queue;
  */
 public class Host extends SimObject implements HostInterface {
 
+    private final static String SIMOBJECTTYPE = "LAN";
     private TransportProtocol protocol;
     private Queue<SimPacket> fromApplication = new LinkedList<SimPacket>();
     private Queue<SimPacket> packetsReceived = new LinkedList<SimPacket>();
@@ -68,5 +69,10 @@ public class Host extends SimObject implements HostInterface {
         }
         router.insertFromLAN(fromApplication.poll());
         return true;
+    }
+
+    @Override
+    public String type() {
+        return SIMOBJECTTYPE;
     }
 }

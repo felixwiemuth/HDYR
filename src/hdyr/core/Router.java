@@ -25,6 +25,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class Router extends SimObject implements RouterInterface {
 
+    private final static String SIMOBJECTTYPE = "Router";
     private int buffersize; //buffer size in DATAUNIT - this is an "accumulated" buffer, so all buffers share this memory
     private int buffer; //available buffer
     private RoutingAlgorithm alg;
@@ -33,7 +34,6 @@ public class Router extends SimObject implements RouterInterface {
     private ArrayList<RouterInPort> inPorts = new ArrayList<RouterInPort>();
     private LinkedBlockingQueue<SimPacket> fromLAN = new LinkedBlockingQueue<SimPacket>(); //packets received from LAN
     private Host lan = null; //the LAN this router is connected to - 'null' if not
-    
     //state variables
     private int freeBufferPending = 0; //buffer freed this step - available next step
 
@@ -89,7 +89,7 @@ public class Router extends SimObject implements RouterInterface {
     public void freeBuffer(int n) {
         freeBufferPending += n;
     }
-    
+
     public void insertFromLAN(SimPacket p) {
         if (useBuffer(p.packet().getSize())) {
             logger().log("Packet received from connected LAN: " + p.name());
@@ -178,5 +178,10 @@ public class Router extends SimObject implements RouterInterface {
     @Override
     public int bufferSize() {
         return buffersize;
+    }
+
+    @Override
+    public String type() {
+        return SIMOBJECTTYPE;
     }
 }

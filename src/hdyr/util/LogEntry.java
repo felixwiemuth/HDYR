@@ -14,41 +14,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package hdyr.core;
+package hdyr.util;
 
-import hdyr.util.Logger;
+import hdyr.core.SimObject;
 
 /**
  *
  * @author Felix Wiemuth
  */
-public abstract class SimObject {
+public class LogEntry {
 
-    private String name;
-    private final Director director;
-    private Logger logger = new Logger(this); //logs the activity of the respective simulation object
+    private SimObject source; //simulation object that made the entry
+    private int time; //corresponding simulation time
+    private String message;
 
-    public SimObject(String name, Director director) {
-        this.name = name;
-        this.director = director;
+    public LogEntry(SimObject source, int time, String message) {
+        this.source = source;
+        this.time = time;
+        this.message = message;
     }
 
-    public Logger logger() {
-        return logger;
+    public int time() {
+        return time;
+    }
+
+    public String msg() {
+        return message;
     }
 
     /**
-     * Get the display name of the type of this SimObject.
+     * Get formatted log entry with time and message.
      * @return 
      */
-    public abstract String type();
-
-    //public String id();
-    public String logname() {
-        return name;
-    }
-
-    public Director director() {
-        return director;
+    public String format() {
+        return "[" + time + "] " + source.type() + " " + source.logname() + ": " + message;
     }
 }
