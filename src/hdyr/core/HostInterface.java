@@ -18,21 +18,24 @@ package hdyr.core;
 
 /**
  * The interface of a host for the transport protocol to use.
+ *
  * @author Felix Wiemuth
  */
 public interface HostInterface {
 
     /**
      * Look at the first packet of the queue of packets to be sent.
-     * @return 
+     *
+     * @return
      */
     public Packet peek();
 
     /**
-     * Send the first packet of the queue of packets to be sent
-     * to the connected router.
-     * @return false - if the queue of packets to send is empty
-     *         true - otherwise
+     * Send the first packet of the queue of packets to be sent to the connected
+     * router.
+     *
+     * @return <code>false</code> if the queue of packets to send is empty;
+     *         <code>true</code> otherwise
      */
     public boolean push();
 }

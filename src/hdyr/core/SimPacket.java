@@ -17,9 +17,9 @@
 package hdyr.core;
 
 /**
- * The packet type used by the simulation.
- * It encapsulates a 'Packet' object which is the real packet
- * the routing algorithm deals with etc.
+ * The packet type used by the simulation. It encapsulates a 'Packet' object
+ * which is the real packet the routing algorithm deals with etc.
+ *
  * @author Felix Wiemuth
  */
 public class SimPacket {

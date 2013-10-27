@@ -31,69 +31,78 @@ public interface RouterInterface {
 
     /**
      * Get available buffer in DATAUNITS.
-     * @return 
+     *
+     * @return
      */
     public int bufferAvailable();
 
     /**
      * Get size of buffer in DATAUNITS.
-     * @return 
+     *
+     * @return
      */
     public int bufferSize();
 
     /**
      * Ask for allocation of 'n' DATAUNITS bufferspace.
+     *
      * @param n DATAUNITS of buffer needed
-     * @return true - enough buffer available, it is now allocated
-     *         false - not enough buffer available: memory must not be used!
+     * @return <code>true</code> - enough buffer available, it is now allocated;
+     *         <code>false</code> - not enough buffer available: memory must not
+     *         be used!
      */
     public boolean useBuffer(int n);
 
     /**
-     * Indicate that 'n' DATAUNITS of bufferspace are not used anymore.
-     * Note that they will only be available from the next simulation step on.
+     * Indicate that 'n' DATAUNITS of bufferspace are not used anymore. Note
+     * that they will only be available from the next simulation step on.
+     *
      * @param n DATAUNTIS of buffer to be freed
      */
     public void freeBuffer(int n);
 
     /**
-     * Move the first packet on the queue of 'srcPort' to the
-     * 'destPort' queue.
+     * Move the first packet on the queue of 'srcPort' to the 'destPort' queue.
+     *
      * @param srcPort
      * @param destPort
-     * @return false - if the queue of 'srcPort' is empty
-     *         true - otherwise
+     * @return <code>false</code> if the queue of 'srcPort' is empty;
+     *         <code>true</code> otherwise
      */
     public boolean push(RouterInPortInterface srcPort, RouterOutPortInterface destPort);
 
     /**
-     * Move the first packet on the queue of 'srcPort' to the
-     * LAN that is connected to the router (if one).
+     * Move the first packet on the queue of 'srcPort' to the LAN that is
+     * connected to the router (if one).
+     *
      * @param srcPort
      * @param lan
-     * @return false - if the queue of 'srcPort' is empty or no LAN connected
-     *         true - otherwise
+     * @return <code>false</code> if the queue of 'srcPort' is empty or no LAN
+     *         connected; <code>true</code> otherwise
      */
     public boolean pushToLAN(RouterInPortInterface srcPort);
 
     /**
      * Look at the first packet of the queue of packets from the LAN.
-     * @return 
+     *
+     * @return
      */
     public Packet peekLAN();
 
     /**
      * Move the first packet on the queue that contains the packet from the
      * connected LAN to the 'destPort' queue.
+     *
      * @param destPort
-     * @return false - if the queue for the packets of the LAN is empty
-     *         true - otherwise
+     * @return <code>false</code> if the queue for the packets of the LAN is
+     *         empty; <code>true</code> otherwise
      */
     public boolean pushFromLAN(RouterOutPortInterface destPort);
 
     /**
      * Discard the first packet of the queue of 'inPort'.
-     * @param inPort 
+     *
+     * @param inPort
      */
     public void discard(RouterInPortInterface inPort);
 }

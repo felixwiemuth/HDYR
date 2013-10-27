@@ -50,9 +50,10 @@ public class RouterInPort implements RouterInPortInterface {
     }
 
     /**
-     * To be used by 'Link': Insert packet 'p' into the router.
-     * If no buffer space is available, the packet is discarded.
-     * @param p 
+     * To be used by 'Link': Insert packet 'p' into the router. If no buffer
+     * space is available, the packet is discarded.
+     *
+     * @param p
      */
     public void insert(SimPacket p) {
         if (router.useBuffer(p.packet().getSize())) {
@@ -68,7 +69,8 @@ public class RouterInPort implements RouterInPortInterface {
 
     /**
      * Get the first packet of the input queue.
-     * @return null - if queue is empty
+     *
+     * @return <code>null</code> if the queue is empty
      */
     public SimPacket poll() {
         return inQueue.poll();

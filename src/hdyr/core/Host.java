@@ -20,9 +20,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * A 'Host' represents a transport layer or a collection
- * of those on a LAN, connected to one router.
- * The router is set when one is created using this host.
+ * A 'Host' represents a transport layer or a collection of those on a LAN,
+ * connected to one router. The router is set when one is created using this
+ * host.
+ *
  * @author Felix Wiemuth
  */
 public class Host extends SimObject implements HostInterface {

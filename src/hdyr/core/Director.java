@@ -24,19 +24,22 @@ public interface Director {
 
     /**
      * Get the current simulation time.
+     *
      * @return TIMEUNITS passed from the beginning of the simulation
      */
     public int getTime();
 
     /**
      * Obtain a new packet ID.
-     * @return 
+     *
+     * @return
      */
     public String getNewPacketID();
 
     /**
      * Add entry to main log.
-     * @param s 
+     *
+     * @param s
      */
     public void log(String s);
 }

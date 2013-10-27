@@ -47,8 +47,9 @@ public class Router extends SimObject implements RouterInterface {
     }
 
     /**
-     * To be used when creating a new link.
-     * Creates a new router input port for the new link.
+     * To be used when creating a new link. Creates a new router input port for
+     * the new link.
+     *
      * @return the new input port
      */
     public RouterInPort newInPort() {
@@ -64,9 +65,10 @@ public class Router extends SimObject implements RouterInterface {
 
     /**
      * Attach a host (LAN) to the router.
+     *
      * @param lan
-     * @return false - another LAN is already attached
-     *         true - success
+     * @return <code>false</code> - cannot attach host, another LAN is already
+     *         attached; <code>true</code> - success
      */
     public boolean setLAN(Host lan) {
         if (this.lan != null) {

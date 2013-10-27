@@ -24,9 +24,10 @@ public class Math {
 
     /**
      * For x >= 0 devide x by y, rounding up
+     *
      * @param x
      * @param y
-     * @return 
+     * @return
      */
     public static int ceilDiv(int x, int y) {
         return (x + y - 1) / y;

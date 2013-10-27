@@ -19,6 +19,7 @@ package hdyr.core;
 import hdyr.util.XML.LoadXMLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import visualization.old.RouterVisualizationContext;
 
 /**
  *
@@ -33,6 +34,7 @@ public class RoutingSimulation {
         //test
         try {
             Simulation sim = new Simulation("testfiles/simulation.xml");
+            new RouterVisualizationContext<String>().get();
         } catch (LoadXMLException ex) {
             Logger.getLogger(RoutingSimulation.class.getName()).log(Level.SEVERE, null, ex);
         }

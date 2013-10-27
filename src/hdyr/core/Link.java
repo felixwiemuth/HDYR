@@ -53,8 +53,9 @@ public class Link extends SimObject implements RouterOutPortInterface {
     }
 
     /**
-     * Insert packet p into the output queue of the router for this port.
-     * The packet stays inside the router.
+     * Insert packet p into the output queue of the router for this port. The
+     * packet stays inside the router.
+     *
      * @param p
      */
     public void insert(SimPacket p) {

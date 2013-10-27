@@ -18,6 +18,7 @@ package hdyr.core;
 
 /**
  * An encapsulation of a 'Packet' on a link.
+ *
  * @author Felix Wiemuth
  */
 public class LinePacket {

@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * Manage simulation: time, IDs, Logging, ...
+ *
  * @author Felix Wiemuth
  */
 public class SimulationDirector implements Director { //TODO split into interface: SimInfo, class: SimHandlerF / Director

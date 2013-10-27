@@ -39,7 +39,8 @@ public abstract class SimObject {
 
     /**
      * Get the display name of the type of this SimObject.
-     * @return 
+     *
+     * @return
      */
     public abstract String type();
 

@@ -21,6 +21,7 @@ import java.util.LinkedList;
 
 /**
  * A logging utility to log simulation activity.
+ *
  * @author Felix Wiemuth
  */
 public class Logger {

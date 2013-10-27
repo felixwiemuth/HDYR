@@ -25,7 +25,8 @@ public interface RouterOutPortInterface {
 
     /**
      * Get the size of the queue in DATAUNITS.
-     * @return 
+     *
+     * @return
      */
     public int getQueueSize();
 }

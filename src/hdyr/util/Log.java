@@ -20,6 +20,7 @@ import hdyr.core.SimObject;
 
 /**
  * Functions to pass debug information to standard output.
+ *
  * @author Felix Wiemuth
  */
 public class Log {

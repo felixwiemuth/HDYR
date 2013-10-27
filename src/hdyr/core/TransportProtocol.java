@@ -17,11 +17,10 @@
 package hdyr.core;
 
 /**
- * This describes how hosts communicate with each other.
- * It simulates the transport layer protocol.
- * The simulation mainly focuses on the network so
- * the transport protocol does not necessarily have to be
- * sophisticated.
+ * This describes how hosts communicate with each other. It simulates the
+ * transport layer protocol. The simulation mainly focuses on the network so the
+ * transport protocol does not necessarily have to be sophisticated.
+ *
  * @author Felix Wiemuth
  */
 public abstract class TransportProtocol {
@@ -37,19 +36,19 @@ public abstract class TransportProtocol {
     }
 
     /**
-     * This is event is executed when a packet was received from the
-     * connected router.
-     * The content can be checked for acknowledgements etc.
-     * @param packet 
+     * This is event is executed when a packet was received from the connected
+     * router. The content can be checked for acknowledgements etc.
+     *
+     * @param packet
      */
     public abstract void onPacketReceived(Packet packet);
 
     /**
-     * This event is executed when a new packet to send comes in
-     * from the application (simulation).
-     * This is only for information, the protocol can look at
-     * the first packet to be sent using the 'HostInterface'.
-     * @param packet 
+     * This event is executed when a new packet to send comes in from the
+     * application (simulation). This is only for information, the protocol can
+     * look at the first packet to be sent using the 'HostInterface'.
+     *
+     * @param packet
      */
     public abstract void onPacketFromApplication(Packet packet);
 

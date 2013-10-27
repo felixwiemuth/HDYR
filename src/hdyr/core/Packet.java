@@ -17,9 +17,10 @@
 package hdyr.core;
 
 /**
- * A network layer packet to be routed.
- * It is loosely based on the IPv6 packet format but simplified.
- * Extension headers can be realized by extending this class.
+ * A network layer packet to be routed. It is loosely based on the IPv6 packet
+ * format but simplified. Extension headers can be realized by extending this
+ * class.
+ *
  * @author Felix Wiemuth
  */
 public class Packet {
@@ -36,7 +37,8 @@ public class Packet {
 
     /**
      * Get packet size in DATAUNIT.
-     * @return 
+     *
+     * @return
      */
     public int getSize() {
         return size;
@@ -44,7 +46,8 @@ public class Packet {
 
     /**
      * Get source address.
-     * @return 
+     *
+     * @return
      */
     public String getSrc() {
         return src;
@@ -52,7 +55,8 @@ public class Packet {
 
     /**
      * Get destination address.
-     * @return 
+     *
+     * @return
      */
     public String getDest() {
         return dest;

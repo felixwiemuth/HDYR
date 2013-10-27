@@ -44,7 +44,8 @@ public class LogEntry {
 
     /**
      * Get formatted log entry with time and message.
-     * @return 
+     *
+     * @return
      */
     public String format() {
         return "[" + time + "] " + source.type() + " " + source.logname() + ": " + message;

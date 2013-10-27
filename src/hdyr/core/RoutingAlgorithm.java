@@ -35,8 +35,8 @@ public abstract class RoutingAlgorithm {
 //     */
 //    public abstract void onPacketArrive();
     /**
-     * This is called before the algorithm is used the first time,
-     * but after parent field 'router' is initialized.
+     * This is called before the algorithm is used the first time, but after
+     * parent field 'router' is initialized.
      */
     public void init() {
     }
@@ -46,10 +46,9 @@ public abstract class RoutingAlgorithm {
     }
 
     /**
-     * This is called every simulation step.
-     * If a packet arrived in this step,
-     * 'onPacketArrive()' is called before
-     * and 'onSimulationStep()' is always the last method being called.
+     * This is called every simulation step. If a packet arrived in this step,
+     * 'onPacketArrive()' is called before and 'onSimulationStep()' is always
+     * the last method being called.
      */
     public abstract void onSimulationStep();
 }
