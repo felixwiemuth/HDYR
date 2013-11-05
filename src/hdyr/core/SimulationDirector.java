@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Felix Wiemuth
+ * Copyright (C) 2012 - 2013 Felix Wiemuth
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,12 @@
  */
 package hdyr.core;
 
+import hdyr.analyse.SimulationWatch;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Manage simulation: time, IDs, Logging, ...
@@ -31,9 +35,9 @@ public class SimulationDirector implements Director { //TODO split into interfac
     private boolean loggingDefault_toConsole = true;
     private boolean loggingDefault_toMain = true;
     //All simulation objects
-    private List<Host> hosts = new ArrayList<Host>();
-    private ArrayList<Router> routers = new ArrayList<Router>();
-    private List<Link> links = new ArrayList<Link>();
+    private List<Host> hosts = new ArrayList<>();
+    private ArrayList<Router> routers = new ArrayList<>();
+    private List<Link> links = new ArrayList<>();
 
     public void simulate(int time) {
         for (int i = 0; i < time; i++) {
@@ -44,13 +48,13 @@ public class SimulationDirector implements Director { //TODO split into interfac
     public void step() {
         System.out.println("TIME: " + time); //DEBUG
         for (Host h : hosts) {
-            h.simulateStep();
+            h.step();
         }
         for (Router r : routers) {
-            r.simulateStep();
+            r.step();
         }
         for (Link l : links) {
-            l.simulateStep();
+            l.step();
         }
         time++;
     }
@@ -72,6 +76,56 @@ public class SimulationDirector implements Director { //TODO split into interfac
         links.add(link);
         link.logger().setConsoleLogging(loggingDefault_toConsole);
         link.logger().setMainLogging(loggingDefault_toMain);
+    }
+
+    public void addWatch(Class<? extends SimulationWatch> watchType) {
+        try {
+            addWatch(hosts, (Class<SimulationWatch<Host>>) watchType, Host.class);
+        } catch (ClassCastException ex) {
+            try {
+                addWatch(routers, (Class<SimulationWatch<Router>>) watchType, Router.class);
+            } catch (ClassCastException ex2) {
+                try {
+                    addWatch(links, (Class<SimulationWatch<Link>>) watchType, Link.class);
+                } catch (ClassCastException ex3) {
+                    throw ex3; //serious problem
+                }
+            }
+        }
+    }
+
+//    public void addHostWatch(Class<SimulationWatch<Host>> watch) {
+//        addWatch(hosts, watch);
+//    }
+//
+//    /**
+//     * Add a RouterWatch to be activated at all routers.
+//     *
+//     * @param watch
+//     */
+//    public void addRouterWatch(Class<SimulationWatch<Router>> watch) {
+//        addWatch(routers, watch);
+//    }
+//
+//    public void addLinkWatch(Class<SimulationWatch<Link>> watch) {
+//        addWatch(links, watch);
+//    }
+    /**
+     * General method to add watches. The interface provides a seperate method
+     * per watch type to ensure only applicable watches are added.
+     *
+     * @param simObjects
+     * @param watch
+     */
+    private void addWatch(List<? extends SimObject> simObjects, Class<? extends SimulationWatch> watchType, Class T) {
+        //TODO test
+        for (SimObject simObject : simObjects) {
+            try {
+                simObject.addWatch(watchType.getConstructor(T).newInstance(simObject));
+            } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ex) {
+                Logger.getLogger(SimulationDirector.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override

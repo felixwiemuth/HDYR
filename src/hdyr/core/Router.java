@@ -101,6 +101,7 @@ public class Router extends SimObject implements RouterInterface {
         }
     }
 
+    @Override
     public void simulateStep() {
         buffer += freeBufferPending;
         alg.onSimulationStep();

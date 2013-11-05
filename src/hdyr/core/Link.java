@@ -67,6 +67,7 @@ public class Link extends SimObject implements RouterOutPortInterface {
      * Do simulation step. This must be called in the specified order with other
      * 'simulateStep()' methods.
      */
+    @Override
     public void simulateStep() {
         //1. take new packets
         while (!inQueue.isEmpty() && bandwidthAvailable >= inQueue.peek().packet().getSize()) {
@@ -98,6 +99,15 @@ public class Link extends SimObject implements RouterOutPortInterface {
             packetsSize -= p.packet().getSize();
             destInPort.insert(p);
         }
+    }
+
+    /**
+     * Get the router this link belongs to (the source).
+     *
+     * @return
+     */
+    public Router getRouter() {
+        return router;
     }
 
     public Router getDest() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Felix Wiemuth
+ * Copyright (C) 2012 - 2013 Felix Wiemuth
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,9 @@
  */
 package hdyr.core;
 
+import hdyr.analyse.SimulationWatch;
 import hdyr.util.Logger;
+import java.util.Map;
 
 /**
  *
@@ -25,6 +27,7 @@ import hdyr.util.Logger;
 public abstract class SimObject {
 
     private String name;
+    private Map<Class<? extends SimulationWatch>, SimulationWatch> watches;
     private final Director director;
     private Logger logger = new Logger(this); //logs the activity of the respective simulation object
 
@@ -43,6 +46,23 @@ public abstract class SimObject {
      * @return
      */
     public abstract String type();
+
+    public abstract void simulateStep();
+
+    public void step() {
+        simulateStep();
+        for (SimulationWatch watch : watches.values()) {
+            watch.update();
+        }
+    }
+
+    public void addWatch(SimulationWatch watch) {
+        watches.put(watch.getClass(), watch);
+    }
+
+    public SimulationWatch getWatch(Class<? extends SimulationWatch> watchType) {
+        return watches.get(watchType);
+    }
 
     //public String id();
     public String logname() {

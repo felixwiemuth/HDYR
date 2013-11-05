@@ -54,6 +54,7 @@ public class Host extends SimObject implements HostInterface {
         protocol.onPacketReceived(p.packet());
     }
 
+    @Override
     public void simulateStep() {
         protocol.onSimulationStep();
     }
